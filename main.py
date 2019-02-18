@@ -32,10 +32,12 @@ class Game:
         self.winner = None
 
     def run(self):
-        while not self.check_win():
+        exit_cond = False
+        while not exit_cond:
             self.players[self.current_player].move(self.grid)
             self.current_player = int(not self.current_player)
+            winner, exit_cond = check_win(self.grid)
         if not self.simulation:
-            print(f"And the winner is... ")
+            print(f"And the winner is... {winner}")
 
     
