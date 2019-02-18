@@ -1,5 +1,6 @@
 from random import randint
 from pprint import pprint
+from functions import check_win
 
 class Player:
     def __init__(self):
@@ -29,11 +30,6 @@ class Game:
         self.grid = grid
         self.current_player = 0
         self.winner = None
-    
-    def check_win(self):
-        for y in self.grid:
-            for x in y:
-                pass
 
     def run(self):
         while not self.check_win():
