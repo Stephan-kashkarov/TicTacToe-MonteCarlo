@@ -26,26 +26,35 @@ grid5 = [
     ["O", "X", "O"],
     ["O", "X", "O"],
 ]
+grid6 = [
+    ["X", "O", "X"],
+    ["O", "X", "O"],
+    ["O", "X", 0],
+]
+
 
 class TestFunctions(unittest.TestCase):       
     
     def test_check_win_col(self):
         result1 = fn.check_win(grid1)
-        self.assertEquals(result1, ("O", True))
+        self.assertEqual(result1, ("O", True))
        
     def test_check_win_diag(self):
         result2 = fn.check_win(grid2)
-        self.assertEquals(result2, ("X", True))
-
+        self.assertEqual(result2, ("X", True))
 
     def test_check_win_diag2(self):
         result3 = fn.check_win(grid3)
-        self.assertEquals(result3, ("X", True))
+        self.assertEqual(result3, ("X", True))
     
     def test_check_win_row(self):
         result4 = fn.check_win(grid4)
-        self.assertEquals(result4, ("O", True))
+        self.assertEqual(result4, ("O", True))
 
     def test_check_win_false(self):
         result5 = fn.check_win(grid5)
-        self.assertEquals(result5, (None, False))
+        self.assertEqual(result5, (None, True))
+
+    def test_check_win_not_full(self):
+        result6 = fn.check_win(grid6)
+        self.assertEqual(result6, (None, True))
