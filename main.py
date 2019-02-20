@@ -14,7 +14,7 @@ class Bot:
     def __init__(self, weights=[[0 for x in range(3)] for x in range(3)]):
         self.weights = weights
 
-    def move(self, grid, char):
+    def move(self, grid, char, simulation=False):
         """
         Makes a calculated move based on weights
         and grid state
@@ -22,7 +22,22 @@ class Bot:
         @param grid: a 3x3 2d array
         @param char: the character used in move e.g. "X"
         """
-        pass
+        if not simulation:
+            vals = []
+            coords = []
+            for index, row in enumerate(self.weights):
+                for item in row:
+                    if len(vals) == 0:
+                        coords.append([index, row.index(item)])
+                    else:
+                        for i, val in enumerate(coords):
+                            if val < item:
+                                coords.insert(i, [index, row.index(item)])
+
+
+            return grid
+        else:
+            return self.rand_move(grid, char)
 
     def gen_weights(self):
         pass
