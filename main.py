@@ -50,38 +50,31 @@ class Bot:
 
         @param grid: a 3x3 2d array
         @param char: the character used in move e.g. "X"
+        @param simulation: defines rand_move or regular move usage
         """
         if not simulation:
             vals = []
             coords = []
-            for index, row in enumerate(self.weights):
-                for item in row:
-                    if len(vals) == ".":
-                        coords.append([index, row.index(item)])
-                    else:
-                        for i, val in enumerate(coords):
-                            if val < item:
-                                coords.insert(i, [index, row.index(item)])
-            for move in coords:
-                if grid[move[0]][move[1]] == ".":
-                    print("AI: moving")
-                    for row in grid:
-                        print(f"{row[0]} {row[1]} {row[2]}")
-                    print("-" * 5)
-                    grid[move[0]][move[1]] = char
-                    for row in grid:
-                        print(f"{row[0]} {row[1]} {row[2]}")
-                    print("AI: move complete")
-                    return grid
-
-            print("[AI-S: No empty moves!]")
+            self.gen_weights(10000, [[str(x) for x in row] for row in grid])
+            coords = []
+            for y, row in enumerate(self.weights):
+                row = [(y, row.index(x), x) for x in row]
+                coords.extend(sorted(row, key=lambda x: x[2]))
+            coords = sorted(coords, key=lambda x: x[2])
+            while coords:
+                y, x, val = coords.pop()
+                if grid[y][x] in [".", 0]:
+                    grid[y][x] = char
+                    break
+                if len(coords) <= 0:
+                    print("AI: No spaces")
             return grid
         else:
             return self.rand_move(grid, char)
 
-    def gen_weights(self, games):
-        g = Game(self, self, True)
-        c = 0
+    def gen_weights(self, games, grid=[[".", ".", "."] for x in range(3)]):
+        print("Simulating")
+        g = Game(self, self, True, grid)
         for i in range(games):
             grid, winner = g.run()
             self.weights = score_game(
@@ -91,8 +84,6 @@ class Bot:
                 self.loss_const,
                 self.weights
             )[0]
-            print(f"Sim game {c} complete")
-            c += 1
             g.reset()
 
     def rand_move(self, grid, char):
@@ -129,7 +120,6 @@ class Game:
             )
             self.current_player = int(not self.current_player)
             winner, exit_cond = check_win(self.grid)
-            print(exit_cond)
         if not self.simulation:
             print(f"And the winner is... {winner if winner else 'Oh its a tie'}")
         return self.grid, winner
@@ -143,13 +133,7 @@ class Game:
 if __name__ == "__main__":
     p = Player("John")
     a = Bot()
-    a.gen_weights(100)
-    pprint.pprint(a.weights)
     game = Game(p, a, False, [["." for x in range(3)] for y in range(3)])
     game.reset()
     grid, winner = game.run()
-    print(score_game(grid, winner, 3, 1))
-
-
-
-
+    print("Thanks for playing")
