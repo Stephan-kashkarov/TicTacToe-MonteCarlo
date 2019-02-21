@@ -62,7 +62,11 @@ class TestFunctions(unittest.TestCase):
     def test_score_game_1(self):
         result = fn.score_game(grid1, "O", 2, 1)
         self.assertEqual(result[1], 6)
-        self.assertEqual(result[0], [[0, 0, 2],[0, 0, 2],[0, 0, 2],])
+        self.assertEqual(result[0], [
+            [0, 0, 2],
+            [0, 0, 2],
+            [0, 0, 2],
+        ])
     
     def test_score_game_2(self):
         result = fn.score_game(grid2, "X", 1, 1)

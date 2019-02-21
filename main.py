@@ -114,7 +114,7 @@ class Game:
         self.simulation = simulation
         self.players = [(player1, "O"), (player2, "X")]
         self.grid = list(grid)
-        self.grid_org = list(grid)
+        self.grid_org = tuple(([str(y) for y in x] for x in self.grid)) # Why dosent List() work!!!!
         self.current_player = 0
         self.winner = None
 
@@ -135,9 +135,7 @@ class Game:
         return self.grid, winner
 
     def reset(self):
-        print(self.grid)
-        self.grid = list(self.grid_org)
-        print(self.grid)
+        self.grid = list([[str(y) for y in x] for x in self.grid_org]) # Why dosent List() work!!!!
         self.current_player = 0
         self.winner = None
 
@@ -147,7 +145,7 @@ if __name__ == "__main__":
     a = Bot()
     a.gen_weights(100)
     pprint.pprint(a.weights)
-    game = Game(p, a, False)
+    game = Game(p, a, False, [["." for x in range(3)] for y in range(3)])
     game.reset()
     grid, winner = game.run()
     print(score_game(grid, winner, 3, 1))
