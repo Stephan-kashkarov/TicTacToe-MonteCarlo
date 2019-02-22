@@ -1,7 +1,6 @@
 import pprint
 from random import randint
 from functions import check_win, score_game
-from timeit import default_timer as timer
 
 class Player:
     def __init__(self, name):
