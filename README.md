@@ -6,4 +6,4 @@ An AI player for tictactoe using monte carlo methods
 - run main.py with python3.6 +
 
 enter co-ordinates like so `x y` with x and y being numbers between 0 and 2.
-`0 0` would be top left.
+This means`0 0` would be top left and `2 2` would be bottom right.
