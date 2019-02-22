@@ -1,7 +1,7 @@
 # TicTacToe-MonteCarlo
 An AI player for tictactoe using monte carlo methods
 
-To run: \n
+## To run:
 - ensure all Tests are successful
 - run main.py with python3.6 +
 
